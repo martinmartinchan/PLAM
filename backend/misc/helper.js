@@ -1,6 +1,6 @@
-const createResponse = function(status, result, message) {
+const createResponse = function(success, result, message) {
 	return {
-		status: status,
+		success: success,
 		result: result,
 		message: message
 	}

@@ -3,12 +3,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../middlewares/validation');
+const { createResponse } = require('../misc/helper');
 
 // Route for register
 router.post('/register', registerValidation, async (req, res) => {
 	// Check if the user exists in the database
-	const userExist = await User.findOne({username: req.body.username});
-	if (userExist) return res.status(400).json({message: 'Username already exists'});
+	let userExist = await User.findOne({usernameLowerCase: req.body.username.toLowerCase()});
+	if (userExist) return res.status(400).json(createResponse(false, {}, 'Username already exists'));
+
+	// Check if the email exists in the database
+	userExist = await User.findOne({email: req.body.email.toLowerCase()});
+	if (userExist) return res.status(400).json(createResponse(false, {}, 'Email already exists'));
 
 	// Generate a hashed password with bcrypt
 	const salt = await bcrypt.genSalt(10);
@@ -17,13 +22,15 @@ router.post('/register', registerValidation, async (req, res) => {
 	// Store the new user in the database
 	const user = new User({
 		username: req.body.username,
-		password: hashedPassword,
+		usernameLowerCase: req.body.username.toLowerCase(),
+		email: req.body.email.toLowerCase(),
+		password: hashedPassword
 	});
 	try {
 		const savedUser = await user.save();
-		res.json({ user_id: savedUser._id, message: `Successfully created user with username ${savedUser.username}` });
+		return res.json(createResponse(true, { user_id: savedUser._id }, `Successfully created user with username ${savedUser.username}`));
 	} catch(err) {
-		res.status(400).json(err);
+		return res.status(400).json(createResponse(false, {}, err));
 	}
 });
 

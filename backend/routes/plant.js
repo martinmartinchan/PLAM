@@ -2,7 +2,6 @@ const router = require('express').Router();
 const User = require('../models/User');
 const authenticate = require('../middlewares/authentication');
 const { createResponse } = require('../misc/helper');
-const { create } = require('../models/User');
 
 /** Posts a new plant to a user. Requires authentication
  *
