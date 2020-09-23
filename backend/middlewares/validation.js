@@ -63,10 +63,25 @@ module.exports.registerValidation = registerValidation;
 
 // Function to validate the input on login
 const loginValidation = function(req, res, next) {
-	const { username, password } = req.body;
+	const { username, email, password } = req.body;
 
-	// Check fields exists
-	if (!username || !password) return res.status(400).json(createResponse(false, {}, "Please provide a username and a password."));
+	// Check username or email exists
+	if (!username && !email) return res.status(400).json(createResponse(false, {}, "Please provide a username or an email."));
+
+	// Check username and email not existing at the same time
+	if (username && email) return res.status(400).json(createResponse(false, {}, "Please provide username or email. Not both."));
+
+	// Check password exists. Don't validate it.
+	if (!password) return res.status(400).json(createResponse(false, {}, "Please provide a password."));
+
+	// Validate username and set usernameSent if username sent. Otherwise, validate email.
+	if (username) {
+		if (!checkUsername(username)) return res.status(400).json(createResponse(false, {}, "Username must be at least 4 characters long and can not contain special characters."));
+		req.body.usernameSent = true;
+	} else {
+		if (!checkEmail(email)) return res.status(400).json(createResponse(false, {}, "Email is invalid"));
+		req.body.usernameSent = false;
+	}
 
 	next();
 }

@@ -37,12 +37,17 @@ router.post('/register', registerValidation, async (req, res) => {
 // Route to login
 router.post('/login', loginValidation, async (req, res) => {
 	// Check if the user exists in the database
-	const user = await User.findOne({ username: req.body.username });
-	if (!user) return res.status(400).json({ message: 'Username or password does not exist 1' });
+	let user;
+	if (req.body.usernameSent) {
+		user = await User.findOne({ usernameLowerCase: req.body.username.toLowerCase() });
+	} else {
+		user = await User.findOne({ email: req.body.email.toLowerCase() });
+	}
+	if (!user) return res.status(400).json(createResponse(false, {}, 'User does not exist'));
 
 	// Check if the password is correct
 	const validPass = await bcrypt.compare(req.body.password, user.password);
-	if (!validPass) return res.status(401).json({ message: 'Username or password does not exist 2' });
+	if (!validPass) return res.status(401).json(createResponse(false, {}, 'Incorrect password'));
 
 	// Generate an access token for the client
 	const access_token = jwt.sign({ _id: user._id }, process.env.ACCESS_SECRET, { expiresIn: 3600 }); // access tokens expires in 1 hour
@@ -56,7 +61,7 @@ router.post('/login', loginValidation, async (req, res) => {
 	});
 
 	// Send access_token
-	res.json({ access_token: access_token, message: 'Successfully logged in' });
+	return res.json(createResponse(true, { access_token: access_token}, 'Successfully logged in' ));
 });
 
 // Route to refresh access token with the refresh token as a cookie
