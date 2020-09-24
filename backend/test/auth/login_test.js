@@ -40,7 +40,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.true;
-				expect(res.body.result).to.have.keys('access_token');
+				expect(res.body.result).to.have.own.property('access_token');
 				expect(res.header).to.have.own.property('set-cookie');
 				done();
 			});
@@ -59,7 +59,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.true;
-				expect(res.body.result).to.have.keys('access_token');
+				expect(res.body.result).to.have.own.property('access_token');
 				expect(res.header).to.have.own.property('set-cookie');
 				done();
 			});
@@ -78,7 +78,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.true;
-				expect(res.body.result).to.have.keys('access_token');
+				expect(res.body.result).to.have.own.property('access_token');
 				expect(res.header).to.have.own.property('set-cookie');
 				done();
 			});
@@ -97,7 +97,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.true;
-				expect(res.body.result).to.have.keys('access_token');
+				expect(res.body.result).to.have.own.property('access_token');
 				expect(res.header).to.have.own.property('set-cookie');
 				done();
 			});
@@ -115,7 +115,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.false;
-				expect(res.body.result).to.not.have.keys('access_token');
+				expect(res.body.result).to.not.have.own.property('access_token');
 				expect(res.header).to.not.have.own.property('set-cookie');
 				done();
 			});
@@ -135,7 +135,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.false;
-				expect(res.body.result).to.not.have.keys('access_token');
+				expect(res.body.result).to.not.have.own.property('access_token');
 				expect(res.header).to.not.have.own.property('set-cookie');
 				done();
 			});
@@ -154,7 +154,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.false;
-				expect(res.body.result).to.not.have.keys('access_token');
+				expect(res.body.result).to.not.have.own.property('access_token');
 				expect(res.header).to.not.have.own.property('set-cookie');
 				done();
 			});
@@ -173,7 +173,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.false;
-				expect(res.body.result).to.not.have.keys('access_token');
+				expect(res.body.result).to.not.have.own.property('access_token');
 				expect(res.header).to.not.have.own.property('set-cookie');
 				done();
 			});
@@ -192,7 +192,7 @@ describe('Test login', () => {
 				expect(res).to.have.status(401);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.false;
-				expect(res.body.result).to.not.have.keys('access_token');
+				expect(res.body.result).to.not.have.own.property('access_token');
 				expect(res.header).to.not.have.own.property('set-cookie');
 				done();
 			});

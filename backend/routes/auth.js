@@ -68,7 +68,7 @@ router.post('/login', loginValidation, async (req, res) => {
 router.post('/refresh', async (req, res) => {
 	// Check that a refresh token is there in the header as a cookie
 	const refreshToken = req.cookies.refresh;
-	if (!refreshToken) return res.status(400).json({ message: 'No user logged in on this client' });
+	if (!refreshToken) return res.status(400).json(createResponse(false, {}, 'No user logged in on this client'));
 
 	try {
 		// Verify the refresh token
@@ -77,10 +77,10 @@ router.post('/refresh', async (req, res) => {
 		// Generate a new access token for the client
 		const access_token = jwt.sign({ _id: user._id }, process.env.ACCESS_SECRET, { expiresIn: 3600 }); // access tokens expires in 1 hour
 
-		res.json({ access_token: access_token, message: 'Successfully refreshed an accesstoken' });
+		res.json(createResponse(true, { access_token: access_token}, 'Successfully refreshed an accesstoken'));
 	} catch(err) {
 		// Send 401 status if token is invalid
-		res.status(401).json({ message: err });
+		res.status(401).json(createResponse(false, {}, err));
 	}
 });
 

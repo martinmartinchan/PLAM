@@ -37,7 +37,7 @@ describe('Test register with an existing user', () => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.own.property('message');
 				expect(res.body.success).to.be.true;
-				expect(res.body.result).to.have.keys('user_id');
+				expect(res.body.result).to.have.own.property('user_id');
 				done();
 			});
 	});
