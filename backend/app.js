@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cookies = require('cookie-parser');
 const dotenv = require('dotenv');
 const config = require('config');
+const cors = require('cors');
 
 // Initiate app
 const app = express();
@@ -21,6 +22,7 @@ mongoose.connect(process.env[config.get('db_connect')], { useNewUrlParser: true,
 // Middleware
 app.use(express.json());
 app.use(cookies());
+app.use(cors());
 
 /** ------------- Routes ------------- */
 // Routes connected to authentication

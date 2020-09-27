@@ -8,13 +8,21 @@ class App extends Component {
 
 		this.state = {
 			// Checks whether anyone is logged in
-			loggedIn: false,
+			loggedIn: false
 		}
+	}
+
+	setLoggedIn() {
+		this.setState({
+			loggedIn: true
+		})
 	}
 
 	render() {
 		if (!this.state.loggedIn) {
-			return <Login />
+			return <Login 
+				login = {() => this.setLoggedIn()}
+			/>
 		} else {
 			return <h1>Welcome!!! Stranger....</h1>
 		}

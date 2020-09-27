@@ -22,6 +22,7 @@ body {
 	height: 50%;
 	display: flex;
 	justify-content: center;
+	border-top: solid rgb(63, 63, 63) 2px;
 }
 
 @keyframes titleEnter {
@@ -38,7 +39,7 @@ body {
 .title {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: bold;
-	font-size: 20vmin;
+	font-size: 14vmin;
 	color: rgb(240, 240, 240);
 	text-align: center;
 
@@ -47,17 +48,93 @@ body {
   animation-duration: 0.8s;
 }
 
-.formContainer {
+.centerWindow {
 	width: 64vw;
-	height: 46vh;
+	height: 56vh;
 	background-color: white;
 	border: solid rgb(63, 63, 63) 2px;
 	position: relative;
-	top: -23vh;
+	top: -28vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.loginFailure {
+	width: 100%;
+	text-align: center;
+	justify-self: end;
+}
+
+.formContainer {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.inputContainerParent {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 20%;
+}
+
+.inputContainer {
+	width: 80%;
+	display: inline-block;
+	position: relative;
+	padding-bottom: 10%;
+}
+
+span {
+  pointer-events: none;
+  position: absolute;
+  left:0;
+  top:0;
+  transition: 0.2s;
+  transition-timing-function: ease;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+	opacity:0.5;
+	font-size: 20px;
+}
+
+input:focus + span, input:not(:placeholder-shown) + span {
+  opacity:1;
+  transform: scale(0.60) translateY(-160%) translateX(-25px);
+}
+
+input {
+	width: 100%;
+	border: none;
+	outline: 0px;
+	border-bottom: solid rgb(63, 63, 63) 2px;
+	font-size: 20px;
+}
+
+.buttonContainer {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 15%;
+}
+
+.loginButton {
+	width: 50%;
+	height: 40px;
+	margin-bottom: 5%;
+}
+
+.loginButton:hover {
+	cursor: pointer;
 }
 
 @media only screen and (min-width: 500px) {
-	.formContainer {
+	.centerWindow {
 		width: 320px;
 	}
 }
