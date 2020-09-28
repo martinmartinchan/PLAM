@@ -14,6 +14,22 @@ class Login extends Component {
 		}
 	}
 
+	async componentDidMount() {
+		try {
+			const response = await fetch(Config.serverURL + '/api/auth/refresh', {
+				method: 'POST',
+				mode: 'cors',
+				credentials: 'include'
+			});
+			const data = await response.json();
+			if (data.success) {
+				this.props.login()
+			} // Else do nothing and load the login page
+		} catch(err) {
+			this.showFailedLoginMessage(err.toString());
+		}
+	}
+
 	async login() {
 		try {
 			const loginData = {
@@ -23,11 +39,13 @@ class Login extends Component {
 			const response = await fetch(Config.serverURL + '/api/auth/login', {
 				method: 'POST',
 				mode: 'cors',
+				credentials: 'include',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify(loginData)
 			})
 			const data = await response.json();
 			if (data.success) {
+				console.log(data)
 				this.props.login()
 			} else {
 				this.showFailedLoginMessage(data.message);
