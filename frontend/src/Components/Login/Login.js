@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import style from '../styles/login.css';
 import Config from 'Config';
+
+import Form from './Form.js';
+import style from './styles/Login.css';
 
 class Login extends Component {
 	constructor(props) {
@@ -78,25 +80,7 @@ class Login extends Component {
 			</div>
 			<div className={style.bottomDiv}>
 				<div className={style.centerWindow}>
-					<div className={style.loginFailure}>
-						{this.state.loginFailMessage}
-					</div>
-					<div className={style.formContainer}>
-						<div className={style.inputContainerParent}>
-							<div className={style.inputContainer}>
-								<input type='text' className={style.loginInput} placeholder=' ' id='username'></input>
-								<span className={style.loginInputLabel}>Username</span>
-							</div>
-							<div className={style.inputContainer}>
-								<input type='password' className={style.loginInput} placeholder=' ' id='password'></input>
-								<span className={style.loginInputLabel}>Password</span>
-							</div>
-						</div>
-						<div className={style.buttonContainer}>
-							<button className={style.loginButton} onClick={async () => {await this.login()}}>Login</button>
-							<button className={style.loginButton}>Sign up</button>
-						</div>
-					</div>
+					<Form />
 				</div>
 			</div>
 		</div>

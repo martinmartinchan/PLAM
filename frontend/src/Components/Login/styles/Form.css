@@ -1,60 +1,6 @@
-body {
-	margin: 0;
-	padding: 0;
-}
-
 .container {
-	width: 100vw;
-	height: 100vh;
-}
-
-.topDiv {
 	width: 100%;
-	height: 50%;
-	background-image: url('../../media/login_background.jpg');
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-}
-
-.bottomDiv {
-	width: 100%;
-	height: 50%;
-	display: flex;
-	justify-content: center;
-	border-top: solid rgb(63, 63, 63) 2px;
-}
-
-@keyframes titleEnter {
-	from {
-		padding-top: 80px;
-		opacity: 0;
-	}
-	to {
-		padding-top: 15px;
-		opacity: 1;
-	}
-}
-
-.title {
-	font-family: 'Montserrat', sans-serif;
-	font-weight: bold;
-	font-size: 14vmin;
-	color: rgb(240, 240, 240);
-	text-align: center;
-
-	padding-top: 15px;
-	animation-name: titleEnter;
-  animation-duration: 0.8s;
-}
-
-.centerWindow {
-	width: 64vw;
-	height: 56vh;
-	background-color: white;
-	border: solid rgb(63, 63, 63) 2px;
-	position: relative;
-	top: -28vh;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -131,10 +77,4 @@ input {
 
 .loginButton:hover {
 	cursor: pointer;
-}
-
-@media only screen and (min-width: 500px) {
-	.centerWindow {
-		width: 320px;
-	}
 }
