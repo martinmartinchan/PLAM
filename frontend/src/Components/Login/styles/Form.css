@@ -6,7 +6,7 @@
 	align-items: center;
 }
 
-.loginFailure {
+.statusMessage {
 	width: 100%;
 	text-align: center;
 	justify-self: end;

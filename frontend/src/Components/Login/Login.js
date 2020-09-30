@@ -21,54 +21,20 @@ class Login extends Component {
 			const response = await fetch(Config.serverURL + '/api/auth/refresh', {
 				method: 'POST',
 				mode: 'cors',
-				credentials: 'include'
+				credentials: 'include',
+				headers: {'Content-Type': 'application/json'}
 			});
 			const data = await response.json();
 			if (data.success) {
 				this.props.login()
 			} // Else do nothing and load the login page
 		} catch(err) {
-			this.showFailedLoginMessage(err.toString());
+			console.log(err.toString());
 		}
 	}
 
-	async login() {
-		try {
-			const loginData = {
-				username: document.getElementById('username').value,
-				password: document.getElementById('password').value
-			}
-			const response = await fetch(Config.serverURL + '/api/auth/login', {
-				method: 'POST',
-				mode: 'cors',
-				credentials: 'include',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify(loginData)
-			})
-			const data = await response.json();
-			if (data.success) {
-				console.log(data)
-				this.props.login()
-			} else {
-				this.showFailedLoginMessage(data.message);
-			}
-		} catch(err) {
-			this.showFailedLoginMessage(err.toString());
-		}
-	}
-
-	showFailedLoginMessage(message) {
-		this.setState({
-			loginFailed: true,
-			loginFailMessage: message
-		}, () => {
-			setTimeout(() => {
-				this.setState({
-					loginFailed: false,
-					loginFailMessage: ''
-				})
-			}, 3000)
-		})
+	login() {
+		this.props.login()
 	}
 
 	render() {
@@ -80,7 +46,9 @@ class Login extends Component {
 			</div>
 			<div className={style.bottomDiv}>
 				<div className={style.centerWindow}>
-					<Form />
+					<Form
+						login = {() => this.login()}
+					/>
 				</div>
 			</div>
 		</div>
