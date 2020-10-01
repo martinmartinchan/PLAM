@@ -21,7 +21,7 @@ router.get('/:id', userIdValidation, async (req, res) => {
 	if (!user) {
 		return res.status(400).json(createResponse(false, {}, `No user with id ${req.params.id} found.`));
 	}
-	return res.json(createResponse(false, user, `Successfully retrieved user with id ${req.params.id}.`));
+	return res.json(createResponse(true, user, `Successfully retrieved user with id ${req.params.id}.`));
 });
 
 // Get a specific user with access token
