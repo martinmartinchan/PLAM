@@ -33,12 +33,8 @@ app.use('/api/auth', authRoute);
 const userRoute = require('./routes/users');
 app.use('/api/users', userRoute);
 
-// Routes connected to plants
-const plantRoute = require('./routes/plant');
-app.use('/api/plant', plantRoute);
-
 // Routes connected to posts
-const postRoute = require('./routes/post')
-app.use('/api/post', postRoute);
+const postRoute = require('./routes/plantpost')
+app.use('/api/plantpost', postRoute);
 
 module.exports = app;

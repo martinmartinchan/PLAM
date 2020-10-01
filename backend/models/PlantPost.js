@@ -15,10 +15,13 @@ const plantPostSchema = new mongoose.Schema({
 	description: {
 		type: String
 	},
+	owner: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
 	comments: [
 		{type: String}
-	]
-	,
+	],
 	date: {
 		type: Date,
 		default: Date.now

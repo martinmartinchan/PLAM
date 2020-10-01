@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Plant = require('./Plant')
 
 const userSchema = new mongoose.Schema({
 	username: {
@@ -27,9 +26,6 @@ const userSchema = new mongoose.Schema({
 		min:6,
 		max: 1024
 	},
-	plants: [
-		Plant
-	],
 	date: {
 		type: Date,
 		default: Date.now
