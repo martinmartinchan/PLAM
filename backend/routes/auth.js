@@ -5,7 +5,11 @@ const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../middlewares/validation');
 const { createResponse } = require('../misc/helper');
 
-// Route for register
+/**
+ * GET
+ * In: body.username, body.email, body.password
+ * Out: (String) user_id
+ */
 router.post('/register', registerValidation, async (req, res) => {
 	// Check if the user exists in the database
 	let userExist = await User.findOne({usernameLowerCase: req.body.username.toLowerCase()});
@@ -34,7 +38,12 @@ router.post('/register', registerValidation, async (req, res) => {
 	}
 });
 
-// Route to login
+/**
+ * GET
+ * In: body.username OR body.email, body.password
+ * Out: (String) access_token,
+ * 			Cookie refresh
+ */
 router.post('/login', loginValidation, async (req, res) => {
 	// Check if the user exists in the database
 	let user;
@@ -64,7 +73,12 @@ router.post('/login', loginValidation, async (req, res) => {
 	return res.json(createResponse(true, { access_token: access_token}, 'Successfully logged in' ));
 });
 
-// Route to refresh access token with the refresh token as a cookie
+
+/**
+ * GET
+ * In: Cookie refresh
+ * Out: (String) access_token,
+ */
 router.post('/refresh', async (req, res) => {
 	// Check that a refresh token is there in the header as a cookie
 	const refreshToken = req.cookies.refresh;
