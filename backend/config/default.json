@@ -1,3 +1,4 @@
 {
-	"db_connect": "DEV_DB_CONNECT"
+	"db_connect": "DEV_DB_CONNECT",
+	"cors_origin": "http://localhost:8080"
 }

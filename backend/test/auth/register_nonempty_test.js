@@ -10,7 +10,7 @@ const app = require('../../app');
 
 chai.use(chaiHttp);
 
-describe('Test register with an existing user', () => {
+describe('Test auth register with an existing user', () => {
 	beforeEach(async () => {
 		//Clean the databas and Add a user before all tests
 		await User.deleteMany({});
@@ -23,7 +23,7 @@ describe('Test register with an existing user', () => {
 		await firstUser.save();
 	});
 
-	it('Should post a user with another name and another email', done => {
+	it('Expect user posted with another name and another email', done => {
 		user = {
 			username: "TestUser2",
 			email: "Test@User2.com",
@@ -35,14 +35,14 @@ describe('Test register with an existing user', () => {
 			.send(user)
 			.end((req, res) => {
 				expect(res).to.have.status(200);
-				expect(res.body).to.have.own.property('message');
+				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.true;
-				expect(res.body.result).to.have.own.property('user_id');
+				expect(res.body.result).to.have.ownProperty('user_id');
 				done();
 			});
 	});
 
-	it('Should not post a user with an existing name', done => {
+	it('Expect no user posted using an existing name', done => {
 		user = {
 			username: "TestUser",
 			email: "Test@User2.com",
@@ -54,14 +54,14 @@ describe('Test register with an existing user', () => {
 			.send(user)
 			.end((req, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body).to.have.own.property('message');
+				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.false;
 				expect(res.body.result).to.be.empty;
 				done();
 			});
 	});
 
-	it('Should not post a user with an existing name in with different case', done => {
+	it('Expect no user posted using an existing name in with different case', done => {
 		user = {
 			username: "testuser",
 			email: "Test@User2.com",
@@ -73,14 +73,14 @@ describe('Test register with an existing user', () => {
 			.send(user)
 			.end((req, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body).to.have.own.property('message');
+				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.false;
 				expect(res.body.result).to.be.empty;
 				done();
 			});
 	});
 
-	it('Should not post a user with an existing email', done => {
+	it('Expect no user posted using an existing email', done => {
 		user = {
 			username: "TestUser2",
 			email: "Test@User.com",
@@ -92,14 +92,14 @@ describe('Test register with an existing user', () => {
 			.send(user)
 			.end((req, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body).to.have.own.property('message');
+				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.false;
 				expect(res.body.result).to.be.empty;
 				done();
 			});
 	});
 
-	it('Should not post a user with an existing email in with different case', done => {
+	it('Expect no user posted using an existing email with different case', done => {
 		user = {
 			username: "TestUser2",
 			email: "test@user.com",
@@ -111,7 +111,7 @@ describe('Test register with an existing user', () => {
 			.send(user)
 			.end((req, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body).to.have.own.property('message');
+				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.false;
 				expect(res.body.result).to.be.empty;
 				done();

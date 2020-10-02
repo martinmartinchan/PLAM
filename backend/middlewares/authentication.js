@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
+const { createResponse } = require('../misc/helper');
 
 const authenticate = function(req, res, next) {
 	// Check that access token is passed as request
 	const access_token = req.headers.access_token;
 
-	if (!access_token) return res.status(400).json({ message: 'Please provide an access token' });
+	if (!access_token) return res.status(400).json(createResponse(false, {}, 'Please provide an access token'));
 
 	// Verify the token
 	try {
@@ -13,7 +14,7 @@ const authenticate = function(req, res, next) {
 		req.body.client_id = user._id;
 		next();
 	} catch(err) {
-		res.status(401).json({ message: err });
+		return res.status(401).json(createResponse(false, {}, err.toString()));
 	}
 }
 

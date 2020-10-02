@@ -1,7 +1,6 @@
 const router = require('express').Router();
-const mongoose = require('mongoose');
+
 const User = require('../models/User');
-const { userIdValidation } = require('../middlewares/validation');
 const { createResponse } = require('../misc/helper');
 const authenticate = require('../middlewares/authentication');
 
@@ -24,20 +23,21 @@ router.get('/all', async (req, res) => {
  * In: -
  * Out: (Object) user
  */
-router.get('/:id', userIdValidation, async (req, res) => {
-	const user = await User.findById({_id: req.params.id});
+router.get('/', async (req, res) => {
+	try {
+		const user = await User.findById({_id: req.query.id});
 
-	const {_id, username, email} = user;
-	const userToReturn = {
-		_id: _id,
-		username: username,
-		email: email
-	}
+		const {_id, username, email} = user;
+		const userToReturn = {
+			_id: _id,
+			username: username,
+			email: email
+		}
 
-	if (!user) {
-		return res.status(400).json(createResponse(false, {}, `No user with id ${req.params.id} found.`));
+		return res.json(createResponse(true, userToReturn, `Successfully retrieved user with id ${req.query.id}.`));
+	} catch {
+		return res.status(400).json(createResponse(false, {}, `No user with id ${req.query.id} found.`));
 	}
-	return res.json(createResponse(true, userToReturn, `Successfully retrieved user with id ${req.params.id}.`));
 });
 
 /**
@@ -46,17 +46,22 @@ router.get('/:id', userIdValidation, async (req, res) => {
  * Out: (Object) user
  */
 router.get('/token', authenticate, async (req, res) => {
-	// Client ID is set by athenticate middleware
-	const user = await User.findById({_id: req.body.client_id});
+	try {
+		// Client ID is set by athenticate middleware
+		const user = await User.findById({_id: req.body.client_id});
 
-	const {_id, username, email} = user;
-	const userToReturn = {
-		_id: _id,
-		username: username,
-		email: email
+		const {_id, username, email} = user;
+		const userToReturn = {
+			_id: _id,
+			username: username,
+			email: email
+		}
+
+		return res.json(createResponse(true, userToReturn, 'Successfully retrieved user with the accesstoken'));
+	} catch {
+		// If user was deleted but token was still used
+		return res.status(400).json(createResponse(false, {}, `User with id ${req.body.client_id} has been deleted`));
 	}
-
-	return res.json(createResponse(true, userToReturn, 'Successfully retrieved user with the accesstoken'));
 });
 
 module.exports = router;

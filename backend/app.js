@@ -22,7 +22,7 @@ mongoose.connect(process.env[config.get('db_connect')], { useNewUrlParser: true,
 // Middleware
 app.use(express.json());
 app.use(cookies());
-app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
+app.use(cors({ origin: config.get('cors_origin'), credentials: true }));
 
 /** ------------- Routes ------------- */
 // Routes connected to authentication

@@ -86,13 +86,3 @@ const loginValidation = function(req, res, next) {
 	next();
 }
 module.exports.loginValidation = loginValidation;
-
-// Function to valide the user id when sent by client
-const userIdValidation = function(req, res, next) {
-	if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-		next();
-	} else {
-		return res.status(400).json(createResponse(false, {}, `No user with id ${req.params.id} found.`));
-	}
-}
-module.exports.userIdValidation = userIdValidation;
