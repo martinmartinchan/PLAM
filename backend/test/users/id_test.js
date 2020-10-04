@@ -25,8 +25,7 @@ describe('Test users id', () => {
 			password: hashedPassword
 		});
 		await firstUser.save();
-		const user = await User.findOne({ username: "TestUser" });
-		this.user_id = user._id;
+		this.user_id = firstUser._id;
 	});
 
 	it('Expect user to be found given the correct id', done => {

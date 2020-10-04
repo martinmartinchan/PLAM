@@ -42,7 +42,7 @@ describe('Test users all', () => {
 		await firstUser.save();
 		return chai.request(app)
 			.get('/api/users/all')
-			.then((res) => {
+			.then(res => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.true;
@@ -69,7 +69,7 @@ describe('Test users all', () => {
 		await secondUser.save();
 		return chai.request(app)
 			.get('/api/users/all')
-			.then((res) => {
+			.then(res => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.true;

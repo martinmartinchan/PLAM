@@ -78,7 +78,7 @@ describe('Test users id', () => {
 		return chai.request(app)
 			.get('/api/users/token')
 			.set('access_token', this.test_access_token)
-			.then((res) => {
+			.then(res => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.ownProperty('message');
 				expect(res.body.success).to.be.false;

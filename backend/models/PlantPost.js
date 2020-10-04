@@ -17,7 +17,8 @@ const plantPostSchema = new mongoose.Schema({
 	},
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: true
 	},
 	comments: [
 		{type: String}
@@ -28,4 +29,4 @@ const plantPostSchema = new mongoose.Schema({
 	}
 });
 
-module.exports = plantPostSchema;
+module.exports = mongoose.model('PlantPost', plantPostSchema);;

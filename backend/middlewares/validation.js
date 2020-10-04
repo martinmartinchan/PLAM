@@ -86,3 +86,23 @@ const loginValidation = function(req, res, next) {
 	next();
 }
 module.exports.loginValidation = loginValidation;
+
+// Function to validate the number on get request for multiple plant posts
+const countQueryValidation = function(req, res, next) {
+	// If no count is passed in the query, set hasCount to false
+	if (req.query.hasOwnProperty('count')) {
+		const count = Number(req.query.count);
+
+		// Check that it is an integer
+		if (!Number.isInteger(count)) return res.status(400).json(createResponse(false, {}, 'Please provide a positive integer as count'));
+
+		// Check that it is positive
+		if (count <= 0) return res.status(400).json(createResponse(false, {}, 'Please provide a positive integer as count'));
+
+		req.hasCount = true;
+	} else {
+		req.hasCount = false;
+	}
+	next();
+}
+module.exports.countQueryValidation = countQueryValidation;

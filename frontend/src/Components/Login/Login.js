@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Config from 'Config';
 
 import Form from './Form.js';
 import style from './styles/Login.css';
@@ -16,25 +15,8 @@ class Login extends Component {
 		}
 	}
 
-	async componentDidMount() {
-		try {
-			const response = await fetch(Config.serverURL + '/api/auth/refresh', {
-				method: 'POST',
-				mode: 'cors',
-				credentials: 'include',
-				headers: {'Content-Type': 'application/json'}
-			});
-			const data = await response.json();
-			if (data.success) {
-				this.props.login()
-			} // Else do nothing and load the login page
-		} catch(err) {
-			console.log(err.toString());
-		}
-	}
-
-	login() {
-		this.props.login()
+	login(access_token) {
+		this.props.login(access_token)
 	}
 
 	render() {
@@ -47,7 +29,7 @@ class Login extends Component {
 			<div className={style.bottomDiv}>
 				<div className={style.centerWindow}>
 					<Form
-						login = {() => this.login()}
+						login = {(access_token) => this.login(access_token)}
 					/>
 				</div>
 			</div>

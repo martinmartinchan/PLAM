@@ -33,7 +33,7 @@ export default function Form(props) {
 			})
 			const data = await response.json();
 			if (data.success) {
-				props.login()
+				props.login(data.result.access_token);
 			} else {
 				setStatusMessage(data.message);
 			}

@@ -1,5 +1,10 @@
 import React, { Component } from "react";
+import { Route, Switch, withRouter } from 'react-router-dom';
+import Config from 'Config';
+
 import Login from './Login/Login';
+import Header from './Header/Header';
+import Home from './Home/Home';
 
 
 class App extends Component {
@@ -8,25 +13,75 @@ class App extends Component {
 
 		this.state = {
 			// Checks whether anyone is logged in
-			loggedIn: false
+			loggedIn: false,
+			// Holds the access_token
+			access_token: null
 		}
 	}
 
-	setLoggedIn() {
+	/**First thing to do is to check if someone is logged into this client
+	 * and get the access_token if that's the case
+	 */
+	async componentDidMount() {
+		try {
+			const response = await fetch(Config.serverURL + '/api/auth/refresh', {
+				method: 'POST',
+				mode: 'cors',
+				credentials: 'include',
+				headers: {'Content-Type': 'application/json'}
+			});
+			const data = await response.json();
+			// If refresh is successful, login
+			if (data.success) {
+				this.setLoggedIn(data.result.access_token);
+			} else { // else render login page
+				this.props.history.push('/login');
+			}
+		} catch(err) {
+			console.log(err.toString());
+		}
+	}
+
+	setLoggedIn(access_token) {
 		this.setState({
-			loggedIn: true
+			loggedIn: true,
+			access_token: access_token
+		}, () => {
+			// Always go to home
+			this.props.history.push('/home');
 		})
 	}
 
 	render() {
-		if (!this.state.loggedIn) {
-			return <Login 
-				login = {() => this.setLoggedIn()}
+		return <Switch>
+			<Route
+				path = '/login'
+				exact render = {
+					() => <Login
+						login = {(access_token) => this.setLoggedIn(access_token)}
+					/>
+				}
 			/>
-		} else {
-			return <h1>Welcome!!! Stranger....</h1>
-		}
+			<Route
+				path = '/home'
+				render = {
+					props =>
+					<div>
+						<Header
+							{...props}
+							loggedIn = {this.state.loggedIn}
+							access_token = {this.state.access_token}
+						/>
+						<Home
+							{...props}
+							loggedIn = {this.state.loggedIn}
+							access_token = {this.state.access_token}
+						/>
+					</div>
+				}
+			/>
+		</Switch>
 	}
 }
 
-export default App;
+export default withRouter(App);
