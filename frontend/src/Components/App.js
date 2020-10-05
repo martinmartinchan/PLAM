@@ -3,8 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import Config from 'Config';
 
 import Login from './Login/Login';
-import Header from './Header/Header';
-import Home from './Home/Home';
+import Main from './Main/Main';
 
 
 class App extends Component {
@@ -48,11 +47,12 @@ class App extends Component {
 			access_token: access_token
 		}, () => {
 			// Always go to home
-			this.props.history.push('/home');
+			this.props.history.push('/main');
 		})
 	}
 
 	render() {
+		console.log(this.state.access_token);
 		return <Switch>
 			<Route
 				path = '/login'
@@ -63,21 +63,14 @@ class App extends Component {
 				}
 			/>
 			<Route
-				path = '/home'
+				path = '/main'
 				render = {
 					props =>
-					<div>
-						<Header
-							{...props}
-							loggedIn = {this.state.loggedIn}
-							access_token = {this.state.access_token}
-						/>
-						<Home
-							{...props}
-							loggedIn = {this.state.loggedIn}
-							access_token = {this.state.access_token}
-						/>
-					</div>
+					<Main
+						{...props}
+						loggedIn = {this.state.loggedIn}
+						access_token = {this.state.access_token}
+					/>
 				}
 			/>
 		</Switch>
