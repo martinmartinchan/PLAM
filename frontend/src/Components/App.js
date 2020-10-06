@@ -47,12 +47,11 @@ class App extends Component {
 			access_token: access_token
 		}, () => {
 			// Always go to home
-			this.props.history.push('/main');
+			this.props.history.push('/');
 		})
 	}
 
 	render() {
-		console.log(this.state.access_token);
 		return <Switch>
 			<Route
 				path = '/login'
@@ -63,7 +62,7 @@ class App extends Component {
 				}
 			/>
 			<Route
-				path = '/main'
+				path = '/'
 				render = {
 					props =>
 					<Main

@@ -4,6 +4,8 @@ import Config from 'Config';
 import Header from './Header';
 import Home from './Home';
 
+import style from './styles/Main.css';
+
 class Main extends Component {
 	constructor(props) {
 		super(props);
@@ -14,8 +16,26 @@ class Main extends Component {
 		}
 	}
 
+	/**
+	 * When component mounts, get the username of the user and latest plant posts
+	 */
 	componentDidMount() {
-		// Fetch the user information
+		this.getUserInfo();
+		this.getPlantposts();
+	}
+
+	/**
+	 * When Component is updated, check if access_token was updated, if so refetch the username
+	 */
+	componentDidUpdate(previousProps) {
+		console.log(this.props.access_token);
+		if (previousProps.access_token !== this.props.access_token) {
+			this.getUserInfo();
+		}
+	}
+
+	// Fetch the user information
+	getUserInfo() {
 		fetch(Config.serverURL + '/api/users/token', {
 			method: 'GET',
 			mode: 'cors',
@@ -31,8 +51,10 @@ class Main extends Component {
 			}
 		})
 		.catch(err => console.log(err));
+	}
 
-		// Fetch the latest 20 plants
+	// Fetch the latest 20 plants
+	getPlantposts() {
 		fetch(Config.serverURL + '/api/plantpost/latest?count=20', {
 			method: 'GET',
 			mode: 'cors',
@@ -55,7 +77,7 @@ class Main extends Component {
 	}
 
 	render() {
-		return <div>
+		return <div className={style.main_container}>
 			<Header
 				username = {this.state.username}
 			/>
